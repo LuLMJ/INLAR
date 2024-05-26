@@ -1,0 +1,26 @@
+<main>
+  <section class="form-section">
+    <img src="https://institutonossolargv.org.br/wp-content/uploads/2021/11/logo-instituto-nosso-larW.png" class="logo"/>
+     <!-- <h1>{{ title }}</h1> -->
+
+    <div class="form">
+      <mat-form-field >
+        <mat-label>Usuário*</mat-label>
+        <input matInput type="text" placeholder="Usuário" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Senha*</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Senha">
+      </mat-form-field>
+
+      <button>{{ primaryBtnText }}</button>
+    </div>
+
+    <!-- <div class="or-section">
+      <span>or</span>
+    </div>
+
+    <button>{{ secondaryBtnText }}</button> -->
+  </section>
+</main>
