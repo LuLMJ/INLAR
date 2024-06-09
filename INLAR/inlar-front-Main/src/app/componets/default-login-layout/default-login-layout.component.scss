@@ -1,0 +1,62 @@
+@import "../../../styles/variables.scss";
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: $gray-backgroud;
+}
+
+mat-form-field {
+  height: 70px;
+
+  
+}
+
+
+section {
+  height: 500px;
+  width: 408px;
+  
+}
+
+.logo{
+  margin: auto;
+  display: block;
+  width: 200px;
+  height: 140px;
+}
+
+.form-section {
+  display: grid;
+  border-radius: 8px;
+  border: none;
+  width: 410px;
+  padding: 0 20px;
+  background-color: $secundy-backgroud;
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  
+}
+
+button {
+  font-size: 14px;
+  border-radius: 8px;
+  outline: none;
+  border: none;
+  margin: 2px;
+  font-weight: bold;
+  background-color: $primary-color;
+  height: 48px;
+  color: #ffffff;
+}
+button:hover {
+  transition: all 0.5s;
+  background-color: #0272db;
+}
