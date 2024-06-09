@@ -56,4 +56,16 @@ export class DoadorRepositorio {
 
     return prismaDoadores.map(DoadorMapper.fromDatabase);
   }
+
+  async Delete(idDoador: number): Promise<boolean> {
+    const res = await this.prisma.doador.delete({
+      where: {
+        IDDOADOR:idDoador
+      }
+    })
+    if( res ){
+      return true}
+      
+      return false
+  }
 }

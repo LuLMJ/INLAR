@@ -10,6 +10,8 @@ import { UpdateDoador } from 'src/inlar/actions/doador/update-doador';
 import { UpdateDoadorController } from './controllers/doador/update-doador-controller';
 import { GetDoadoresByPage } from 'src/inlar/actions/doador/get-doadores-by-page';
 import { GetDoadoresByPageController } from './controllers/doador/get-doadores-by-page-controller';
+import { DeleteDoadorById } from 'src/inlar/actions/doador/delete-doador';
+import { DeleteDoadorByIdController } from './controllers/doador/delete-doador-by-id-controller';
 
 @Module({
   imports: [PrismaModule],
@@ -19,6 +21,7 @@ import { GetDoadoresByPageController } from './controllers/doador/get-doadores-b
     GetDoadorById,
     UpdateDoador,
     GetDoadoresByPage,
+    DeleteDoadorById,
   ],
   controllers: [
     CreateUsuarioController,
@@ -26,6 +29,7 @@ import { GetDoadoresByPageController } from './controllers/doador/get-doadores-b
     GetDoadorByIdController,
     UpdateDoadorController,
     GetDoadoresByPageController,
+    DeleteDoadorByIdController,
   ],
 })
 export class HttpModule {}
