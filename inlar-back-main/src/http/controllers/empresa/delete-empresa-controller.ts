@@ -8,18 +8,18 @@ import {
   
   import { z } from 'zod';
   import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
-  import { DeleteDoadorById } from 'src/inlar/actions/doador/delete-doador';
+  import { DeleteEmpresa } from 'src/inlar/actions/empresa/delete-empresa';
   
   const squema = z.object({
-    id_doador: z.coerce.number(),
+    id_empresa: z.coerce.number(),
   });
   
   type Schema = z.infer<typeof squema>;
   const validationPipe = new ZodValidationPipe(squema);
   
-  @Controller('/doador/:id_doador')
-  export class DeleteDoadorByIdController {
-    constructor(private deleteDoadorById: DeleteDoadorById) {}
+  @Controller('/empresa/:id_empresa')
+  export class DeleteEmmpresaController {
+    constructor(private deleteEmpresaById: DeleteEmpresa) {}
   
     @Delete()
     @HttpCode(200)
@@ -27,15 +27,15 @@ import {
       @Param(validationPipe)
       param: Schema,
     ) {
-      const doador = await this.deleteDoadorById.execute({
-        idDoador: param.id_doador,
+      const empresa = await this.deleteEmpresaById.execute({
+        idEmpresa: param.id_empresa,
       });
-
-      if (doador) {
-        return doador;
+  
+      if (empresa) {
+        return empresa;
       }
   
-      return new BadRequestException('Doador not found');
+      return new BadRequestException('Empresa not found');
     }
   }
   
