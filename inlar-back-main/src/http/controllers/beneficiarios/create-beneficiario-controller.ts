@@ -19,7 +19,7 @@ import {
     }),
     genero: z.string().optional(),
     cpf: z.string().max(11, { message: 'Cannot exceed 11 caracters' }).optional(),
-    rg: z.string().max(30, { message: 'Cannot exceed 30 caracters'}).optional(),
+    rg: z.string().max(8, { message: 'Cannot exceed 8 caracters'}).optional(),
     cnpj: z
       .string()
       .max(14, { message: 'Cannot exceed 14 caracters' })

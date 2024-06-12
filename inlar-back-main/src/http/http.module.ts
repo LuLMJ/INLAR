@@ -12,18 +12,6 @@ import { GetDoadoresByPage } from 'src/inlar/actions/doador/get-doadores-by-page
 import { GetDoadoresByPageController } from './controllers/doador/get-doadores-by-page-controller';
 import { DeleteDoadorById } from 'src/inlar/actions/doador/delete-doador';
 import { DeleteDoadorByIdController } from './controllers/doador/delete-doador-by-id-controller';
-import { CreateEmpresa } from 'src/inlar/actions/empresa/create-empresa';
-import { CreateEmpresaController } from './controllers/empresa/create-empresa-controller';
-import { GetEmpresaByIdController } from './controllers/empresa/get-empresa-by-id-controller';
-import { GetEmpresaById } from 'src/inlar/actions/empresa/get-empresa-by-id';
-import { GetEmpresaByPageController } from './controllers/empresa/get-empresa-by-page-controller';
-import { GetEmpresaByPage } from 'src/inlar/actions/empresa/get-empresa-by-page';
-import { UpdateEmpresa } from 'src/inlar/actions/empresa/update-empresa';
-import { UpdateEmpresaController } from './controllers/empresa/update-empresa-controller';
-import { DeleteEmmpresaController } from './controllers/empresa/delete-empresa-controller';
-import { DeleteEmpresa } from 'src/inlar/actions/empresa/delete-empresa';
-import { AuthenticateUser } from 'src/inlar/actions/usuarios/authenticate-user';
-import { AuthenticateUserController } from './controllers/usuarios/authenticate-user-controller';
 
 @Module({
   imports: [PrismaModule],
@@ -34,12 +22,6 @@ import { AuthenticateUserController } from './controllers/usuarios/authenticate-
     UpdateDoador,
     GetDoadoresByPage,
     DeleteDoadorById,
-    CreateEmpresa,
-    GetEmpresaById,
-    GetEmpresaByPage,
-    UpdateEmpresa,
-    DeleteEmpresa,
-    AuthenticateUser
   ],
   controllers: [
     CreateUsuarioController,
@@ -48,12 +30,6 @@ import { AuthenticateUserController } from './controllers/usuarios/authenticate-
     UpdateDoadorController,
     GetDoadoresByPageController,
     DeleteDoadorByIdController,
-    CreateEmpresaController,
-    GetEmpresaByIdController,
-    GetEmpresaByPageController,
-    UpdateEmpresaController,
-    DeleteEmmpresaController,
-    AuthenticateUserController
   ],
 })
 export class HttpModule {}

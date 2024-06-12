@@ -30,7 +30,7 @@ import {
       const doador = await this.deleteDoadorById.execute({
         idDoador: param.id_doador,
       });
-
+      console.log(doador)
       if (doador) {
         return doador;
       }

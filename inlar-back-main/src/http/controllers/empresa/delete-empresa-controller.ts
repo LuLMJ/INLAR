@@ -6,9 +6,9 @@ import {
     Delete,
   } from '@nestjs/common';
   
-  import { z } from 'zod';
-  import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
-  import { DeleteEmpresa } from 'src/inlar/actions/empresa/delete-empresa';
+import { z } from 'zod';
+import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
+import { DeleteDoadorById } from 'src/inlar/actions/empresa/delete-empresa';
   
   const squema = z.object({
     id_empresa: z.coerce.number(),
@@ -18,8 +18,8 @@ import {
   const validationPipe = new ZodValidationPipe(squema);
   
   @Controller('/empresa/:id_empresa')
-  export class DeleteEmmpresaController {
-    constructor(private deleteEmpresaById: DeleteEmpresa) {}
+  export class DeleteEmpresaByIdController {
+    constructor(private deleteEmpresaById: DeleteEmpresaById) {}
   
     @Delete()
     @HttpCode(200)
@@ -30,7 +30,7 @@ import {
       const empresa = await this.deleteEmpresaById.execute({
         idEmpresa: param.id_empresa,
       });
-  
+      console.log(empresa)
       if (empresa) {
         return empresa;
       }

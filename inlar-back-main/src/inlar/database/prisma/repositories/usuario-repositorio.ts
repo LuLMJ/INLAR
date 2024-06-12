@@ -31,20 +31,6 @@ export class UsuarioRepositorio {
 
     return null;
   }
-  async findByEmailAndSenha(email: string, senha: string): Promise<Usuario | null> {
-    const prismaUsuario = await this.prisma.usuario.findMany({
-      where: {
-        SENHA: senha,
-        EMAIL: email,
-      },
-    });
-
-    if (prismaUsuario ) {
-      return UsuarioMapper.fromDatabase(prismaUsuario[0]);
-    }
-
-    return null;
-  }
 
   async update(idUsuario: number, usuario: Usuario): Promise<Usuario | null> {
     const data = UsuarioMapper.toDatabase(usuario);
