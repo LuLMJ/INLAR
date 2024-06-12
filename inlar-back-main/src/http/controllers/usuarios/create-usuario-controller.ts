@@ -39,6 +39,6 @@ export class CreateUsuarioController {
       return usuario;
     }
 
-    return BadRequestException;
+    throw new BadRequestException;
   }
 }

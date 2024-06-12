@@ -1,9 +1,9 @@
 import {
     Controller,
     HttpCode,
-    BadRequestException,
     Param,
     Get,
+    NotFoundException,
   } from '@nestjs/common';
   
   import { z } from 'zod';
@@ -35,7 +35,7 @@ import {
         return empresa;
       }
   
-      return new BadRequestException('Empresa not found');
+      throw new NotFoundException('Empresa not found');
     }
   }
   

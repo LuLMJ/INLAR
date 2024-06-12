@@ -44,7 +44,7 @@ import {
         return tipoDoacao;
       }
   
-      return new BadRequestException();
+      throw new BadRequestException;
     }
   }
   

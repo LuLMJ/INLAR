@@ -4,6 +4,7 @@ import {
     BadRequestException,
     Param,
     Delete,
+    NotFoundException,
   } from '@nestjs/common';
   
   import { z } from 'zod';
@@ -35,7 +36,7 @@ import {
         return doador;
       }
   
-      return new BadRequestException('Doador not found');
+      throw new NotFoundException('Doador not found');
     }
   }
   

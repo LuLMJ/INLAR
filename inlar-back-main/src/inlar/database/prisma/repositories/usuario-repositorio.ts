@@ -39,7 +39,7 @@ export class UsuarioRepositorio {
       },
     });
 
-    if (prismaUsuario ) {
+    if (prismaUsuario[0]) {
       return UsuarioMapper.fromDatabase(prismaUsuario[0]);
     }
 

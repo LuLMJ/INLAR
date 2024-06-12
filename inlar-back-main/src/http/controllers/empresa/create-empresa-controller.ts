@@ -10,10 +10,10 @@ import {
   import { CreateEmpresa } from 'src/inlar/actions/empresa/create-empresa';
   
   const squema = z.object({
-    nomefantasia: z.string({
+    nome_fantasia: z.string({
       required_error: 'Field: {nomefantasia} is required',
     }),
-    razaosocial: z.string().optional(),
+    razao_social: z.string().optional(),
     cnpj: z
       .string()
       .max(14, { message: 'Cannot exceed 14 caracters' })
@@ -64,8 +64,8 @@ import {
       body: Schema,
     ) {
       const empresa = await this.createEmpresa.execute({
-        nomefantasia: body.nomefantasia,
-        razaosocial: body.razaosocial,
+        nomefantasia: body.nome_fantasia,
+        razaosocial: body.razao_social,
         cnpj: body.cnpj,
         contato1: body.contato1,
         contato2: body.contato2,
@@ -82,7 +82,7 @@ import {
         return empresa;
       }
   
-      return new BadRequestException();
+      throw new BadRequestException();
     }
   }
   

@@ -11,8 +11,8 @@ import {
   import { UpdateEmpresa } from 'src/inlar/actions/empresa/update-empresa';
   
   const squema = z.object({
-    nomefantasia: z.string(),
-    razaosocial: z.string().optional(),
+    nome_fantasia: z.string(),
+    razao_social: z.string().optional(),
     cnpj: z.string().max(14, { message: 'Cannot exceed 14 caracters' }).optional(),
     contato1: z.string().optional(),
     contato2: z.string().optional(),
@@ -49,8 +49,8 @@ import {
     ) {
       const empresa = await this.updateEmpresa.execute({
         idEmpresa: param.id_empresa,
-        nomefantasia: body.nomefantasia,
-        razaosocial: body.razaosocial,
+        nomefantasia: body.nome_fantasia,
+        razaosocial: body.razao_social,
         cnpj: body.cnpj,
         contato1: body.contato1,
         contato2: body.contato2,
@@ -67,7 +67,7 @@ import {
         return empresa;
       }
   
-      return new BadRequestException();
+      throw new BadRequestException();
     }
   }
   

@@ -71,6 +71,6 @@ export class UpdateDoadorController {
       return doador;
     }
 
-    return new BadRequestException();
+    throw new BadRequestException();
   }
 }

@@ -3,7 +3,7 @@ import {
     Body,
     HttpCode,
     NotFoundException,
-    Get,
+    Post,
   } from '@nestjs/common';
   
   import { z } from 'zod';
@@ -22,7 +22,7 @@ import {
   export class AuthenticateUserController {
     constructor(private authenticateUser: AuthenticateUser) {}
   
-    @Get()
+    @Post()
     @HttpCode(200)
     async handle(
       @Body(validationPipe)
@@ -37,7 +37,7 @@ import {
         return usuario;
       }
   
-      return NotFoundException;
+      throw new NotFoundException();
     }
   }
   

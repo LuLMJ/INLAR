@@ -13,7 +13,8 @@ import {
     nome: z.string({
       required_error: 'Field: {nome} is required',
     }),
-    datanasc: z.date().optional(),
+    // TODO: testar isso
+    datanasc: z.string().date().optional(),
     tipo_pessoa: z.string({
       required_error: 'Field: {tipo_pessoa} is required',
     }),
@@ -94,7 +95,7 @@ import {
         return beneficiario;
       }
   
-      return new BadRequestException();
+      throw new BadRequestException;
     }
   }
   
