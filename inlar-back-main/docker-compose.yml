@@ -19,9 +19,10 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_PASSWORD: ${DATABASE_USER}
-      MYSQL_USER: ${DATABASE_PASSWORD}
+      # MYSQL_PASSWORD: ${DATABASE_USER}
+      # MYSQL_USER: ${DATABASE_PASSWORD}
       MYSQL_DATABASE: "inlar"
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD} 
     volumes:
       - ./data/mg:/var/lib/mysql
     networks:
