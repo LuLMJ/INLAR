@@ -1,9 +1,9 @@
 import {
     Controller,
     HttpCode,
-    BadRequestException,
     Param,
     Get,
+    NotFoundException,
   } from '@nestjs/common';
   
   import { z } from 'zod';
@@ -35,7 +35,7 @@ import {
         return tipoDoacao;
       }
   
-      return new BadRequestException('tipoDoacao not found');
+      throw new NotFoundException('tipoDoacao not found');
     }
   }
   

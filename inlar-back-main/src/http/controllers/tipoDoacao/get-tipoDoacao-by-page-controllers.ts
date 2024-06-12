@@ -31,11 +31,7 @@ import {
         page: query.page,
       });
   
-      if (tipoDoacao) {
-        return tipoDoacao;
-      }
-  
-      return new BadRequestException('tipoDoacao not found');
+      return tipoDoacao
     }
   }
   

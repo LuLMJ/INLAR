@@ -31,11 +31,7 @@ import {
         page: query.page,
       });
   
-      if (beneficiario) {
-        return beneficiario;
-      }
-  
-      return new BadRequestException('Beneficiario not found');
+      return beneficiario
     }
   }
   

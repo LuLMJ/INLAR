@@ -77,7 +77,7 @@ import {
         return beneficiario;
       }
   
-      return new BadRequestException();
+      throw new BadRequestException;
     }
   }
   

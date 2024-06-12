@@ -31,11 +31,7 @@ import {
         page: query.page,
       });
   
-      if (empresa) {
-        return empresa;
-      }
-  
-      return new BadRequestException('Empresa not found');
+      return empresa
     }
   }
   

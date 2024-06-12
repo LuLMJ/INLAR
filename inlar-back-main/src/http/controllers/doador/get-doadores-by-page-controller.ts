@@ -31,10 +31,6 @@ export class GetDoadoresByPageController {
       page: query.page,
     });
 
-    if (doador) {
-      return doador;
-    }
-
-    return new BadRequestException('Doador not found');
+    return doador
   }
 }

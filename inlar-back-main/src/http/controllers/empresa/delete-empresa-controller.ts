@@ -35,7 +35,7 @@ import {
         return empresa;
       }
   
-      return new BadRequestException('Empresa not found');
+      throw new BadRequestException();
     }
   }
   
