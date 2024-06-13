@@ -6,7 +6,6 @@ import { Usuario } from "./usuario";
 interface Props {
     idDoacao?: number;
     idDoador?: number;
-    idTipoDoacao?: number;
     idbeneficiario?: number;
     descricao?: string;
     dataCadastro?: Date;
@@ -18,9 +17,7 @@ interface Props {
     cidade?: string | null;
     uf?: string | null;
     situacao?: string | null;
-    doador?: Doador;
-    beneficiario?: Beneficiario
-    usuario?: Usuario
+    idUsuario?: number
     doacaoItens?: DoacaoItem[] | null
 }
 
@@ -35,12 +32,9 @@ export class Doacao {
     private cidade?: string;
     private uf?: string;
     private situacao?: string;
-    private doador: Doador;
-    private beneficiario: Beneficiario;
-    private usuario: Usuario;
     private idDoacao: number
     private idDoador: number
-    private idTipoDoacao: number
+    private idUsuario: number
     private idbeneficiario: number
     private doacaoItens: DoacaoItem[] | null;
 
@@ -55,13 +49,10 @@ export class Doacao {
         this.cidade = props.cidade || '';
         this.uf = props.uf || '';
         this.situacao = props.situacao || '';
-        this.doador = props.doador || new Doador();
-        this.beneficiario = props.beneficiario || new Beneficiario();
-        this.usuario = props.usuario || new Usuario();
         this.idDoacao = props.idDoacao;
         this.idDoador = props.idDoador;
-        this.idTipoDoacao = props.idTipoDoacao;
-        this.beneficiario = props.beneficiario
+        this.idbeneficiario = props.idbeneficiario;
+        this.idUsuario = props.idUsuario;
         this.doacaoItens = props.doacaoItens || [];
     };
 
@@ -73,8 +64,12 @@ export class Doacao {
         return this.idDoador;
     }
 
-    public getIdTipoDoacao(): number {
-        return this.idTipoDoacao;
+    public getIdBeneficiario(): number {
+        return this.idbeneficiario;
+    }
+
+    public getIdUsuario(): number {
+        return this.idUsuario;
     }
 
     public getDescricao(): string {
@@ -117,18 +112,6 @@ export class Doacao {
         return this.situacao;
     }
 
-    public getDoador(): Doador {
-        return this.doador;
-    }
-
-    public getBeneficiario(): Beneficiario {
-        return this.beneficiario;
-    }
-
-    public getUsuario(): Usuario {
-        return this.usuario;
-    }
-
     public getDoacaoItens(): DoacaoItem[] | null {
         return this.doacaoItens;
     }
@@ -141,8 +124,12 @@ export class Doacao {
         this.idDoador = idDoador;
     }
 
-    public setIdTipoDoacao(idTipoDoacao: number) {
-        this.idTipoDoacao = idTipoDoacao;
+    public setIdBeneficiario(idbeneficiario: number) {
+        this.idbeneficiario = idbeneficiario;
+    }
+
+    public setIdUsuario(idUsuario: number) {
+        this.idUsuario = idUsuario;
     }
 
     public setDescricao(descricao: string) {
@@ -183,18 +170,6 @@ export class Doacao {
 
     public setSituacao(situacao: string) {
         this.situacao = situacao;
-    }
-
-    public setDoador(doador: Doador) {
-        this.doador = doador;
-    }
-
-    public setBeneficiario(beneficiario: Beneficiario) {
-        this.beneficiario = beneficiario;
-    }
-
-    public setUsuario(usuario: Usuario) {
-        this.usuario = usuario;
     }
 
     public setDoacaoItens(doacaoItens: DoacaoItem[] | null) {
