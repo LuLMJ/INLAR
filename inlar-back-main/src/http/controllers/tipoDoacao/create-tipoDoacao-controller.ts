@@ -8,7 +8,7 @@ import {
   
   import { z } from 'zod';
   import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
-  import { CreatetipoDoacao } from 'src/inlar/actions/tipoDoacao/create-tipoDoacao';
+  import { CreateTipoDoacao } from 'src/inlar/actions/tipo-doacao/create-tipo-doacao';
   
   const squema = z.object({
     descricao: z.string(),
@@ -19,7 +19,7 @@ import {
   
   @Controller('/tipoDoacao')
   export class CreatetipoDoacaoController {
-    constructor(private createtipoDoacao: CreatetipoDoacao) {}
+    constructor(private createtipoDoacao: CreateTipoDoacao) {}
   
     @Post()
     @HttpCode(201)

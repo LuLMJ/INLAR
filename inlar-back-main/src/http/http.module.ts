@@ -24,6 +24,22 @@ import { DeleteEmmpresaController } from './controllers/empresa/delete-empresa-c
 import { DeleteEmpresa } from 'src/inlar/actions/empresa/delete-empresa';
 import { AuthenticateUser } from 'src/inlar/actions/usuarios/authenticate-user';
 import { AuthenticateUserController } from './controllers/usuarios/authenticate-user-controller';
+import { CreateDoacaoController } from './controllers/doacao/create-doacao-controller';
+import { CreateDoacao } from 'src/inlar/actions/doacao/create-doacao';
+import { CreateTipoDoacao } from 'src/inlar/actions/tipo-doacao/create-tipo-doacao';
+import { CreatetipoDoacaoController } from './controllers/tipoDoacao/create-tipoDoacao-controller';
+import { GetDoacaoById } from 'src/inlar/actions/doacao/get-doacao-by-id';
+import { GetDoacaoByIdController } from './controllers/doacao/get-doacao-by-id';
+import { GetDoacoesByPageController } from './controllers/doacao/get-doacoes-by-page';
+import { GetDoacaoByPage } from 'src/inlar/actions/doacao/get-doacoes-by-page';
+import { GetDoacaoItemById } from 'src/inlar/actions/doacao-itens/get-doacao-item-by-id';
+import { GetDoacaoItemByIdController } from './controllers/doacao-itens/get-doacao-item-by id-controller';
+import { GetDoacaoItemByDoacaoIdController } from './controllers/doacao-itens/get-doacoes-itens-by-doacao-id-controller';
+import { GetDoacoesItensByDoacaoId } from 'src/inlar/actions/doacao-itens/get-doacoes-itens-by-doacao-id';
+import { GetDoacoesItensByPageController } from './controllers/doacao-itens/get-doacoes-itens-by-page';
+import { GetDoacoesItensByPage } from 'src/inlar/actions/doacao-itens/get-doacoes-itens-by-page';
+import { UpdateDoacaoItem } from 'src/inlar/actions/doacao-itens/update-doacao-item';
+import { UpdateDoacaoItemController } from './controllers/doacao-itens/update-doacao-item-controller';
 
 @Module({
   imports: [PrismaModule],
@@ -39,7 +55,15 @@ import { AuthenticateUserController } from './controllers/usuarios/authenticate-
     GetEmpresaByPage,
     UpdateEmpresa,
     DeleteEmpresa,
-    AuthenticateUser
+    AuthenticateUser,
+    CreateDoacao,
+    CreateTipoDoacao,
+    GetDoacaoById,
+    GetDoacaoByPage,
+    GetDoacaoItemById,
+    GetDoacoesItensByDoacaoId,
+    GetDoacoesItensByPage,
+    UpdateDoacaoItem
   ],
   controllers: [
     CreateUsuarioController,
@@ -53,7 +77,15 @@ import { AuthenticateUserController } from './controllers/usuarios/authenticate-
     GetEmpresaByPageController,
     UpdateEmpresaController,
     DeleteEmmpresaController,
-    AuthenticateUserController
+    AuthenticateUserController,
+    CreateDoacaoController,
+    CreatetipoDoacaoController,
+    GetDoacaoByIdController,
+    GetDoacoesByPageController,
+    GetDoacaoItemByIdController,
+    GetDoacaoItemByDoacaoIdController,
+    GetDoacoesItensByPageController,
+    UpdateDoacaoItemController
   ],
 })
 export class HttpModule {}

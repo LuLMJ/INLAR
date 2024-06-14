@@ -27,7 +27,8 @@ model beneficiario {
   SIGLAESTADO    String?   @db.VarChar(2)
   OBSERVACOES    String?   @db.Text
   DATACAD        DateTime?
-  ATIVO     Boolean 
+  ATIVO          Boolean
+  doacao         doacao[]
 }
 
 model doador {
@@ -47,7 +48,8 @@ model doador {
   SIGLAESTADO String?   @db.VarChar(2)
   OBSERVACOES String?   @db.Text
   DATACAD     DateTime?
-  ATIVO     Boolean 
+  ATIVO       Boolean
+  doacao      doacao[]
 }
 
 model empresa {
@@ -58,7 +60,7 @@ model empresa {
   CONTATO1     String? @db.VarChar(11)
   CONTATO2     String? @db.VarChar(11)
   CEP          String? @db.VarChar(8)
-  LOGRADOURO  String? @db.VarChar(255)
+  LOGRADOURO   String? @db.VarChar(255)
   NUMERO       String? @db.VarChar(10)
   COMPLEMENTO  String? @db.VarChar(100)
   BAIRRO       String? @db.VarChar(100)
@@ -67,10 +69,11 @@ model empresa {
 }
 
 model tipodoacao {
-  IDTIPODOACAO Int       @id @default(autoincrement())
+  IDTIPODOACAO Int           @id @default(autoincrement())
   DESCRICAO    String
   DATACAD      DateTime?
-  ATIVO     Boolean 
+  ATIVO        Boolean
+  doacaoItens  doacaoItens[]
 }
 
 model usuario {
@@ -80,5 +83,42 @@ model usuario {
   EMAIL     String?   @db.VarChar(255)
   ROLE      String?   @db.VarChar(1)
   DATACAD   DateTime?
-  ATIVO     Boolean 
+  ATIVO     Boolean
+  doacao    doacao[]
+}
+
+model doacao {
+  IDDOACAO       Int      @id @default(autoincrement())
+  IDDOADOR       Int?
+  IDBENEFICIARIO Int?
+  IDUSUARIO      Int
+  DESCRICAO      String   @db.VarChar(100)
+  DATACAD        DateTime @default(now())
+  CEP            String?  @db.VarChar(11)
+  LOGRADOURO     String?  @db.VarChar(255)
+  NUMERO         String?  @db.VarChar(10)
+  COMPLEMENTO    String?  @db.VarChar(100)
+  BAIRRO         String?  @db.VarChar(100)
+  CIDADE         String?  @db.VarChar(100)
+  SIGLAESTADO    String?  @db.VarChar(2)
+  SITUACAO       String   @default("S")
+
+  FK_DOACAO_DOADOR       doador?        @relation(fields: [IDDOADOR], references: [IDDOADOR])
+  FK_DOACAO_BENEFICIARIO beneficiario?  @relation(fields: [IDBENEFICIARIO], references: [IDBENEFICIARIO])
+  FK_DOACAO_USUARIO      usuario       @relation(fields: [IDUSUARIO], references: [IDUSUARIO])
+  doacaoItens            doacaoItens[]
+}
+
+model doacaoItens {
+  IDITEMDOACAO   Int      @id @default(autoincrement())
+  IDDOACAO       Int
+  IDTIPODOACAO   Int
+  NUMITEM        Int?
+  DESCRICAO      String?  @db.VarChar(255)
+  QTDE           Int?
+  VALORMONETARIO Decimal?  @db.Decimal(10, 2)
+  DATACAD        DateTime @default(now())
+
+  FK_DOACAOITENS_DOACAO     doacao     @relation(fields: [IDDOACAO], references: [IDDOACAO])
+  FK_DOACAOITENS_TIPODOACAO tipodoacao @relation(fields: [IDTIPODOACAO], references: [IDTIPODOACAO])
 }
