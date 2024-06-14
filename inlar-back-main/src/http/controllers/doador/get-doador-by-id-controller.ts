@@ -4,11 +4,14 @@ import {
   Param,
   Get,
   NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
 
 import { z } from 'zod';
 import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
 import { GetDoadorById } from 'src/inlar/actions/doador/get-doador-by-id';
+import { Doador } from 'src/inlar/entities/doador';
+import { NotFoundError } from 'src/inlar/errors/not-found-error';
 
 const squema = z.object({
   id_doador: z.coerce.number(),
@@ -27,14 +30,18 @@ export class GetDoadorByIdController {
     @Param(validationPipe)
     param: Schema,
   ) {
-    const doador = await this.getDoadorById.execute({
+    const res = await this.getDoadorById.execute({
       idDoador: param.id_doador,
     });
 
-    if (doador) {
-      return doador;
+    if (res instanceof Doador) {
+      return res;
     }
 
-    throw new NotFoundException('Doador not found');
+    if(res instanceof NotFoundError) {
+      throw new NotFoundException(res.message)
+    }
+
+    throw new BadRequestException();
   }
 }

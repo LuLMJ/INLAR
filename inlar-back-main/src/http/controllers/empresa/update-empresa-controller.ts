@@ -5,10 +5,14 @@ import {
     BadRequestException,
     Put,
     Param,
+    NotFoundException,
   } from '@nestjs/common';
   import { z } from 'zod';
   import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
   import { UpdateEmpresa } from 'src/inlar/actions/empresa/update-empresa';
+import { Empresa } from 'src/inlar/entities/empresa';
+import { NotFoundError } from 'src/inlar/errors/not-found-error';
+import { InternalError } from 'src/inlar/errors/internal-error';
   
   const squema = z.object({
     nome_fantasia: z.string(),
@@ -47,7 +51,7 @@ import {
       @Body(validationPipe)
       body: Schema,
     ) {
-      const empresa = await this.updateEmpresa.execute({
+      const res = await this.updateEmpresa.execute({
         idEmpresa: param.id_empresa,
         nomefantasia: body.nome_fantasia,
         razaosocial: body.razao_social,
@@ -63,8 +67,16 @@ import {
         uf: body.uf,
       });
   
-      if (empresa) {
-        return empresa;
+      if (res instanceof Empresa) {
+        return res;
+      }
+
+      if(res instanceof NotFoundError) {
+        throw new NotFoundException(res.message);
+      }
+
+      if(res instanceof InternalError) {
+        throw new BadRequestException("Internal Error");
       }
   
       throw new BadRequestException();

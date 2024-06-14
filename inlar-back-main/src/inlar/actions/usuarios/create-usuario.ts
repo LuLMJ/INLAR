@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { UsuarioRepositorio } from 'src/inlar/database/prisma/repositories/usuario-repositorio';
 import { Usuario } from 'src/inlar/entities/usuario';
+import { AlreadyExistsError } from 'src/inlar/errors/already-exists-error';
+import { InternalError } from 'src/inlar/errors/internal-error';
 
 interface Request {
   usuario: string;
@@ -12,7 +14,15 @@ interface Request {
 export class CreateUsuario {
   constructor(private usuarioRepositorio: UsuarioRepositorio) {}
 
-  async execute(data: Request): Promise<Usuario | null> {
+  async execute(data: Request): Promise<Usuario | AlreadyExistsError | InternalError> {
+    const exists = await this.usuarioRepositorio.findByEmail(
+      data.email,
+    );
+
+    if (exists) {
+      return new AlreadyExistsError("Usuario already exists");
+    }
+    
     const usuario = new Usuario({
       usuario: data.usuario,
       email: data.email,
@@ -27,7 +37,7 @@ export class CreateUsuario {
 
       return res;
     } catch (error) {
-      return null;
+      return new InternalError(error?.message ?? "Internal Error");
     }
   }
 }

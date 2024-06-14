@@ -13,10 +13,6 @@ export class GetDoadoresByPage {
   async execute(data: Request): Promise<Doador[]> {
     const res = await this.doadorRepositorio.findMany(data.page);
 
-    if (res) {
-      return res;
-    }
-
-    return null;
+    return res
   }
 }

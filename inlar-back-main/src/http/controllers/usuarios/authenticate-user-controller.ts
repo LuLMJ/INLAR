@@ -4,11 +4,16 @@ import {
     HttpCode,
     NotFoundException,
     Post,
+    BadRequestException,
   } from '@nestjs/common';
   
   import { z } from 'zod';
   import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
   import { AuthenticateUser } from 'src/inlar/actions/usuarios/authenticate-user';
+import { Usuario } from 'src/inlar/entities/usuario';
+import { AlreadyExistsError } from 'src/inlar/errors/already-exists-error';
+import { InternalError } from 'src/inlar/errors/internal-error';
+import { NotFoundError } from 'src/inlar/errors/not-found-error';
   
   const squema = z.object({
     email: z.string().email(),
@@ -28,13 +33,17 @@ import {
       @Body(validationPipe)
       body: Schema,
     ) {
-      const usuario = await this.authenticateUser.execute({
+      const res = await this.authenticateUser.execute({
         email: body.email,
         senha: body.senha,
       });
   
-      if (usuario) {
-        return usuario;
+      if (res instanceof Usuario) {
+        return res;
+      }
+  
+      if (res instanceof NotFoundError) {
+        throw new NotFoundException("Usuario not found");
       }
   
       throw new NotFoundException();

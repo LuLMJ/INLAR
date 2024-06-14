@@ -1,11 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { DoacaoItensRepositorio } from 'src/inlar/database/prisma/repositories/doacao-itens-repositorio';
 import { DoacaoRepositorio } from 'src/inlar/database/prisma/repositories/doacao-repositorio';
+import { DoadorRepositorio } from 'src/inlar/database/prisma/repositories/doador-repositorio';
+import { TipoDoacaoRepositorio } from 'src/inlar/database/prisma/repositories/tipo-doacao-repositorio';
 import { Doacao } from 'src/inlar/entities/doacao';
 import { DoacaoItem } from 'src/inlar/entities/doacao-itens';
+import { InternalError } from 'src/inlar/errors/internal-error';
+import { NotFoundError } from 'src/inlar/errors/not-found-error';
 
 interface Request {
   id_usuario: number;
+  id_doador?: number
   descricao: string;
   cep?: string | null;
   logradouro?: string | null;
@@ -28,12 +33,21 @@ interface Request {
 export class CreateDoacao {
   constructor(
     private doacaoRepositorio: DoacaoRepositorio,
-    private doacaoItemRepositorio: DoacaoItensRepositorio
+    private doacaoItemRepositorio: DoacaoItensRepositorio,
+    private doadorRepositorio: DoadorRepositorio,
   ) {}
 
-  async execute(data: Request): Promise<Doacao | null> {
+  async execute(data: Request): Promise<Doacao | NotFoundError | InternalError> {
+    if(data.id_doador) {
+      const doador = await this.doadorRepositorio.findById(data.id_doador)
+
+      if(!doador) {
+        return new NotFoundError("Doador not found")
+      }
+    }
     const doacao = new Doacao({
       idUsuario: data.id_usuario,
+      idDoador: data.id_doador,
       descricao: data.descricao,
       cep: data.cep,
       logradouro: data.logradouro,
@@ -52,8 +66,7 @@ export class CreateDoacao {
     try {
         createdDoacao = await this.doacaoRepositorio.create(doacao);
     } catch (error) {
-        console.log('error: ', error);
-        return null
+        return new InternalError(error?.message ?? "Internal Error")
     }
 
     data.itens.map((item) => {
@@ -71,7 +84,7 @@ export class CreateDoacao {
     try {
         await this.doacaoItemRepositorio.createMany(doacaoItens);
     } catch (error) { 
-        return null
+        return new InternalError(error?.message ?? "Internal Error")
     }
 
     return createdDoacao

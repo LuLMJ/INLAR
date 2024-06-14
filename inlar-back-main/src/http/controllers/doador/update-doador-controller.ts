@@ -5,10 +5,14 @@ import {
   BadRequestException,
   Put,
   Param,
+  NotFoundException,
 } from '@nestjs/common';
 import { z } from 'zod';
 import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
 import { UpdateDoador } from 'src/inlar/actions/doador/update-doador';
+import { Doador } from 'src/inlar/entities/doador';
+import { NotFoundError } from 'src/inlar/errors/not-found-error';
+import { InternalError } from 'src/inlar/errors/internal-error';
 
 const squema = z.object({
   nome: z.string().optional(),
@@ -49,7 +53,7 @@ export class UpdateDoadorController {
     @Body(validationPipe)
     body: Schema,
   ) {
-    const doador = await this.updateDoador.execute({
+    const res = await this.updateDoador.execute({
       idDoador: param.id_doador,
       nome: body.nome,
       tipoPessoa: body.tipo_pessoa,
@@ -67,8 +71,16 @@ export class UpdateDoadorController {
       observacoes: body.observacoes,
     });
 
-    if (doador) {
-      return doador;
+    if (res instanceof Doador) {
+      return res;
+    }
+
+    if(res instanceof NotFoundError) {
+      throw new NotFoundException(res.message);
+    }
+
+    if(res instanceof InternalError) {
+      throw new BadRequestException("Internal Error");
     }
 
     throw new BadRequestException();

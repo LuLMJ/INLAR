@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { DoadorRepositorio } from 'src/inlar/database/prisma/repositories/doador-repositorio';
 import { Doador } from 'src/inlar/entities/doador';
+import { InternalError } from 'src/inlar/errors/internal-error';
+import { NotFoundError } from 'src/inlar/errors/not-found-error';
 
 interface Request {
   idDoador: number;
@@ -24,11 +26,11 @@ interface Request {
 export class UpdateDoador {
   constructor(private doadorRepositorio: DoadorRepositorio) {}
 
-  async execute(data: Request): Promise<Doador | null> {
+  async execute(data: Request): Promise<Doador | NotFoundError | InternalError> {
     const doadorExists = await this.doadorRepositorio.findById(data.idDoador);
 
     if (!doadorExists) {
-      return null;
+      return new NotFoundError("Doador not found");
     }
 
     doadorExists.setNome(data.nome);
@@ -54,8 +56,7 @@ export class UpdateDoador {
 
       return res;
     } catch (error) {
-      console.log('error: ', error);
-      return null;
+      return new InternalError(error?.message ?? "Internal Error");
     }
   }
 }

@@ -10,13 +10,9 @@ interface Request {
 export class GetEmpresaByPage {
   constructor(private empresaRepositorio: EmpresaRepositorio) {}
 
-  async execute(data: Request): Promise<Empresa[] | null> {
+  async execute(data: Request): Promise<Empresa[]> {
     const res = await this.empresaRepositorio.findMany(data.page)
 
-    if(res) {
-        return res
-    }
-
-    return null
+    return res
   }
 }

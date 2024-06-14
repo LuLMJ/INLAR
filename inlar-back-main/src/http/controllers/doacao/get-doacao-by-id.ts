@@ -9,6 +9,8 @@ import {
   import { z } from 'zod';
   import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
 import { GetDoacaoById } from 'src/inlar/actions/doacao/get-doacao-by-id';
+import { Doacao } from 'src/inlar/entities/doacao';
+import { NotFoundError } from 'src/inlar/errors/not-found-error';
   
   const squema = z.object({
     id_doacao: z.coerce.number(),
@@ -27,12 +29,16 @@ import { GetDoacaoById } from 'src/inlar/actions/doacao/get-doacao-by-id';
       @Param(validationPipe)
       param: Schema,
     ) {
-      const doacao = await this.getDoacaoById.execute({
+      const res = await this.getDoacaoById.execute({
         idDoacao: param.id_doacao,
       });
   
-      if (doacao) {
-        return doacao;
+      if (res instanceof Doacao) {
+        return res;
+      }
+
+      if(res instanceof NotFoundError) {
+        throw new NotFoundError(res.message);
       }
   
       throw new NotFoundException('Empresa not found');

@@ -9,6 +9,8 @@ import {
   import { z } from 'zod';
   import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
 import { GetDoacaoItemById } from 'src/inlar/actions/doacao-itens/get-doacao-item-by-id';
+import { DoacaoItem } from 'src/inlar/entities/doacao-itens';
+import { NotFoundError } from 'src/inlar/errors/not-found-error';
   
   const squema = z.object({
     id_doacao_item: z.coerce.number(),
@@ -27,12 +29,16 @@ import { GetDoacaoItemById } from 'src/inlar/actions/doacao-itens/get-doacao-ite
       @Param(validationPipe)
       param: Schema,
     ) {
-      const doador = await this.getDoacaoItemById.execute({
+      const res = await this.getDoacaoItemById.execute({
         id: param.id_doacao_item,
       });
   
-      if (doador) {
-        return doador;
+      if (res instanceof DoacaoItem) {
+        return res;
+      }
+
+      if(res instanceof NotFoundError) {
+        throw new NotFoundException(res.message)
       }
   
       throw new NotFoundException('Doacao item not found');

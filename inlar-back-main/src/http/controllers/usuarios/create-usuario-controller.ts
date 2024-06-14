@@ -4,11 +4,15 @@ import {
   Body,
   HttpCode,
   BadRequestException,
+  ConflictException,
 } from '@nestjs/common';
 
 import { z } from 'zod';
 import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
 import { CreateUsuario } from 'src/inlar/actions/usuarios/create-usuario';
+import { Usuario } from 'src/inlar/entities/usuario';
+import { AlreadyExistsError } from 'src/inlar/errors/already-exists-error';
+import { InternalError } from 'src/inlar/errors/internal-error';
 
 const squema = z.object({
   usuario: z.string(),
@@ -29,16 +33,24 @@ export class CreateUsuarioController {
     @Body(validationPipe)
     body: Schema,
   ) {
-    const usuario = await this.createUsuario.execute({
+    const res = await this.createUsuario.execute({
       email: body.email,
       senha: body.senha,
       usuario: body.usuario,
     });
 
-    if (usuario) {
-      return usuario;
+    if (res instanceof Usuario) {
+      return res;
     }
 
-    throw new BadRequestException;
+    if (res instanceof AlreadyExistsError) {
+      throw new ConflictException(res.message);
+    }
+
+    if (res instanceof InternalError) {
+      throw new BadRequestException("Internal error");
+    }
+
+    throw new BadRequestException();
   }
 }

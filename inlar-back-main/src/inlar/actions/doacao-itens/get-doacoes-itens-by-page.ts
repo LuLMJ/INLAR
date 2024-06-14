@@ -13,10 +13,6 @@ export class GetDoacoesItensByPage {
   async execute(data: Request): Promise<DoacaoItem[]> {
     const res = await this.doacaoItensRepositorio.findMany(data.page);
 
-    if (res) {
-      return res;
-    }
-
-    return null;
+    return res;
   }
 }
