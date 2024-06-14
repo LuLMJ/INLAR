@@ -12,7 +12,7 @@ export class GetDoacaoById {
 
   async execute(data: Request): Promise<Doacao | null> {
     const res = await this.doacaoRepositorio.findById(data.idDoacao);
-
+    
     if (res) {
       return res;
     }

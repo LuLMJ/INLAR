@@ -27,6 +27,11 @@ import { AuthenticateUserController } from './controllers/usuarios/authenticate-
 import { CreateDoacaoController } from './controllers/doacao/create-doacao-controller';
 import { CreateDoacao } from 'src/inlar/actions/doacao/create-doacao';
 import { CreateTipoDoacao } from 'src/inlar/actions/tipo-doacao/create-tipo-doacao';
+import { CreatetipoDoacaoController } from './controllers/tipoDoacao/create-tipoDoacao-controller';
+import { GetDoacaoById } from 'src/inlar/actions/doacao/get-doacao-by-id';
+import { GetDoacaoByIdController } from './controllers/doacao/get-doacao-by-id';
+import { GetDoacoesByPageController } from './controllers/doacao/get-doacoes-by-page';
+import { GetDoacaoByPage } from 'src/inlar/actions/doacao/get-doacoes-by-page';
 
 @Module({
   imports: [PrismaModule],
@@ -44,7 +49,9 @@ import { CreateTipoDoacao } from 'src/inlar/actions/tipo-doacao/create-tipo-doac
     DeleteEmpresa,
     AuthenticateUser,
     CreateDoacao,
-    CreateTipoDoacao
+    CreateTipoDoacao,
+    GetDoacaoById,
+    GetDoacaoByPage
   ],
   controllers: [
     CreateUsuarioController,
@@ -59,7 +66,10 @@ import { CreateTipoDoacao } from 'src/inlar/actions/tipo-doacao/create-tipo-doac
     UpdateEmpresaController,
     DeleteEmmpresaController,
     AuthenticateUserController,
-    CreateDoacaoController
+    CreateDoacaoController,
+    CreatetipoDoacaoController,
+    GetDoacaoByIdController,
+    GetDoacoesByPageController
   ],
 })
 export class HttpModule {}

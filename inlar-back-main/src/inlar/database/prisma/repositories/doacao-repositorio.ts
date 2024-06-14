@@ -55,6 +55,9 @@ export class DoacaoRepositorio {
     const prismaDoacao = await this.prisma.doacao.findMany({
       take: 10,
       skip: (page - 1) * 10,
+      include: {
+        doacaoItens: true
+      }
     });
 
     return prismaDoacao.map(DoacaoMapper.fromDatabase);

@@ -1,37 +1,37 @@
-import {
-    Controller,
-    HttpCode,
-    BadRequestException,
-    Get,
-    Query,
-  } from '@nestjs/common';
+// import {
+//     Controller,
+//     HttpCode,
+//     BadRequestException,
+//     Get,
+//     Query,
+//   } from '@nestjs/common';
   
-  import { z } from 'zod';
-  import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
-  import { GetBenefiaciarioByPage } from 'src/inlar/actions/beneficiario/get-beneficiario-by-page';
+//   import { z } from 'zod';
+//   import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
+//   import { GetBenefiaciarioByPage } from 'src/inlar/actions/beneficiario/get-beneficiario-by-page';
   
-  const squema = z.object({
-    page: z.coerce.number(),
-  });
+//   const squema = z.object({
+//     page: z.coerce.number(),
+//   });
   
-  type Schema = z.infer<typeof squema>;
-  const validationPipe = new ZodValidationPipe(squema);
+//   type Schema = z.infer<typeof squema>;
+//   const validationPipe = new ZodValidationPipe(squema);
   
-  @Controller('/beneficiario')
-  export class GetBeneficiarioByPageController {
-    constructor(private getBeneficiariosByPage: GetBeneficiariosByPage) {}
+//   @Controller('/beneficiario')
+//   export class GetBeneficiarioByPageController {
+//     constructor(private getBeneficiariosByPage: GetBeneficiariosByPage) {}
   
-    @Get()
-    @HttpCode(200)
-    async handle(
-      @Query(validationPipe)
-      query: Schema,
-    ) {
-      const beneficiario = await this.getBeneficiariosByPage.execute({
-        page: query.page,
-      });
+//     @Get()
+//     @HttpCode(200)
+//     async handle(
+//       @Query(validationPipe)
+//       query: Schema,
+//     ) {
+//       const beneficiario = await this.getBeneficiariosByPage.execute({
+//         page: query.page,
+//       });
   
-      return beneficiario
-    }
-  }
+//       return beneficiario
+//     }
+//   }
   
