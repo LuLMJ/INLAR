@@ -37,7 +37,7 @@ export class CreateUsuario {
 
       return res;
     } catch (error) {
-      return new InternalError(error.message);
+      return new InternalError(error?.message ?? "Internal Error");
     }
   }
 }

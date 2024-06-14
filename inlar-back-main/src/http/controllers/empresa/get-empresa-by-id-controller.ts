@@ -9,6 +9,7 @@ import {
   import { z } from 'zod';
   import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
   import { GetEmpresaById } from 'src/inlar/actions/empresa/get-empresa-by-id';
+import { Empresa } from 'src/inlar/entities/empresa';
   
   const squema = z.object({
     id_empresa: z.coerce.number(),
@@ -27,12 +28,16 @@ import {
       @Param(validationPipe)
       param: Schema,
     ) {
-      const empresa = await this.getEmpresaById.execute({
+      const res = await this.getEmpresaById.execute({
         idEmpresa: param.id_empresa,
       });
   
-      if (empresa) {
-        return empresa;
+      if (res instanceof Empresa) {
+        return res;
+      }
+
+      if(res instanceof NotFoundException) {
+        throw new NotFoundException(res.message)
       }
   
       throw new NotFoundException('Empresa not found');

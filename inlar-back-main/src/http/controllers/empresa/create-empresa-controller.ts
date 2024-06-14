@@ -4,10 +4,14 @@ import {
     Body,
     HttpCode,
     BadRequestException,
+    ConflictException,
   } from '@nestjs/common';
   import { z } from 'zod';
   import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
   import { CreateEmpresa } from 'src/inlar/actions/empresa/create-empresa';
+import { Empresa } from 'src/inlar/entities/empresa';
+import { AlreadyExistsError } from 'src/inlar/errors/already-exists-error';
+import { InternalError } from 'src/inlar/errors/internal-error';
   
   const squema = z.object({
     nome_fantasia: z.string({
@@ -63,7 +67,7 @@ import {
       @Body(validationPipe)
       body: Schema,
     ) {
-      const empresa = await this.createEmpresa.execute({
+      const res = await this.createEmpresa.execute({
         nomefantasia: body.nome_fantasia,
         razaosocial: body.razao_social,
         cnpj: body.cnpj,
@@ -78,8 +82,16 @@ import {
         uf: body.uf,
       });
   
-      if (empresa) {
-        return empresa;
+      if (res instanceof Empresa) {
+        return res;
+      }
+
+      if(res instanceof AlreadyExistsError) {
+        throw new ConflictException(res.message)
+      }
+
+      if (res instanceof InternalError) {
+        throw new BadRequestException("Internal error");
       }
   
       throw new BadRequestException();

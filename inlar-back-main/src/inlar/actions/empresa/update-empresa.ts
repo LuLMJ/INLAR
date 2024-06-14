@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { EmpresaRepositorio } from 'src/inlar/database/prisma/repositories/empresa-repositorio';
 import { Empresa } from 'src/inlar/entities/empresa';
+import { InternalError } from 'src/inlar/errors/internal-error';
+import { NotFoundError } from 'src/inlar/errors/not-found-error';
 
 interface Request {
   idEmpresa: number;
@@ -23,12 +25,12 @@ interface Request {
 export class UpdateEmpresa {
   constructor(private empresaRepositorio: EmpresaRepositorio) {}
 
-  async execute(data: Request): Promise<Empresa | null> {
+  async execute(data: Request): Promise<Empresa | NotFoundError | InternalError> {
 
     const empresaExists = await this.empresaRepositorio.findById(data.idEmpresa)
 
     if(!empresaExists) {
-      return null
+      return new NotFoundError("Empresa not found")
     }
   
     empresaExists.setNomeFantasia(data.nomefantasia)
@@ -50,7 +52,7 @@ export class UpdateEmpresa {
 
       return res;
     } catch (error) {
-      return null;
+      return new InternalError(error?.message ?? "Internal Error");
     }
   }
 }

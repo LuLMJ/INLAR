@@ -69,4 +69,18 @@ export class EmpresaRepositorio {
     
     return false
   }
+
+  async findByCnpj(cnpj: string): Promise<Empresa | null> {
+    const prismaEmpresa = await this.prisma.empresa.findMany({
+      where: {
+        CNPJ: cnpj,
+      },
+    });
+
+    if (prismaEmpresa && prismaEmpresa[0]) {
+      return EmpresaMapper.fromDatabase(prismaEmpresa[0]);
+    }
+
+    return null;
+  }
 }

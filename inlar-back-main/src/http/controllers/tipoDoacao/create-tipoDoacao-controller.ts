@@ -9,6 +9,8 @@ import {
   import { z } from 'zod';
   import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
   import { CreateTipoDoacao } from 'src/inlar/actions/tipo-doacao/create-tipo-doacao';
+import { TipoDoacao } from 'src/inlar/entities/tipoDoacao';
+import { InternalError } from 'src/inlar/errors/internal-error';
   
   const squema = z.object({
     descricao: z.string(),
@@ -27,12 +29,16 @@ import {
       @Body(validationPipe)
       body: Schema,
     ) {
-      const tipoDoacao = await this.createtipoDoacao.execute({
+      const res = await this.createtipoDoacao.execute({
         descricao: body.descricao,
       });
   
-      if (tipoDoacao) {
-        return tipoDoacao;
+      if (res instanceof TipoDoacao) {
+        return res;
+      }
+
+      if(res instanceof InternalError) {
+        throw new BadRequestException("Internal error");
       }
   
       throw new BadRequestException;
