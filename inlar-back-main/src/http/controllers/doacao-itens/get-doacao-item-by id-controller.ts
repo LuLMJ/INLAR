@@ -4,6 +4,7 @@ import {
     Param,
     Get,
     NotFoundException,
+    BadGatewayException,
   } from '@nestjs/common';
   
   import { z } from 'zod';
@@ -41,7 +42,7 @@ import { NotFoundError } from 'src/inlar/errors/not-found-error';
         throw new NotFoundException(res.message)
       }
   
-      throw new NotFoundException('Doacao item not found');
+      throw new BadGatewayException();
     }
   }
   
