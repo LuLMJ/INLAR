@@ -39,6 +39,9 @@ export class DoacaoRepositorio {
       where: {
         IDDOACAO: idDoacao,
       },
+      include: {
+        doacaoItens: true
+      }
     });
 
     if (prismaDoacao) {

@@ -1,5 +1,6 @@
 import { Prisma, doacao as PrismaDoacao, doacaoItens as PrismaDoacaoitens } from "@prisma/client";
 import { Doacao } from "src/inlar/entities/doacao";
+import { DoacaoItensMapper } from "./doacao-itens-mapper";
 
 
 export class DoacaoMapper {
@@ -21,7 +22,9 @@ export class DoacaoMapper {
         }
     }
 
-    static fromDatabase(raw: PrismaDoacao): Doacao {
+    static fromDatabase(raw: PrismaDoacao & {
+        doacaoItens?: PrismaDoacaoitens[]
+    }): Doacao {
         const doacao =  new Doacao({
             idDoacao: raw.IDDOACAO,
             idDoador: raw.IDDOADOR,
@@ -37,6 +40,7 @@ export class DoacaoMapper {
             situacao: raw.SITUACAO,
             idbeneficiario: raw.IDBENEFICIARIO,
             idUsuario: raw.IDUSUARIO,
+            doacaoItens: raw.doacaoItens? raw.doacaoItens.map(DoacaoItensMapper.fromDatabase) : null,
         })
 
         return doacao

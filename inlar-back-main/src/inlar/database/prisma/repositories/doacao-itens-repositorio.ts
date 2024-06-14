@@ -21,6 +21,20 @@ export class DoacaoItensRepositorio {
     return DoacaoItensMapper.fromDatabase(res);
   }
 
+  async createMany(doacaoItem: DoacaoItem[]): Promise<boolean> {
+    const data = doacaoItem.map(DoacaoItensMapper.toDatabase)
+
+    const res = await this.prisma.doacaoItens.createMany({
+      data,
+    });
+
+    if(res) {
+      return true
+    }
+
+    return false
+  }
+
   async update(idDoacaoItem: number, doacaoItem: DoacaoItem): Promise<DoacaoItem | null> {
     const data = DoacaoItensMapper.toDatabase(doacaoItem);
 
