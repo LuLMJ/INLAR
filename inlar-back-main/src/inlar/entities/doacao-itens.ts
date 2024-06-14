@@ -6,7 +6,7 @@ interface Props {
     idDoacaoItem?: number;
     idDoacao?: number;
     idTipoDoacao?: number;
-    numItems?: number;
+    numItens?: number;
     descricao?: string;
     quantidade?: number;
     valor?: number;
@@ -17,7 +17,7 @@ export class DoacaoItem {
     private idDoacaoItem?: number
     private idDoacao?: number
     private idTipoDoacao?: number
-    private numItems?: number
+    private numItens?: number
     private descricao?: string
     private quantidade?: number
     private valor?: number
@@ -27,7 +27,7 @@ export class DoacaoItem {
         this.idDoacaoItem = props.idDoacaoItem;
         this.idDoacao = props.idDoacao;
         this.idTipoDoacao = props.idTipoDoacao;
-        this.numItems = props.numItems;
+        this.numItens = props.numItens;
         this.descricao = props.descricao;
         this.quantidade = props.quantidade;
         this.valor = props.valor;
@@ -46,8 +46,8 @@ export class DoacaoItem {
         return this.idTipoDoacao;
     }
 
-    getNumItems(): number {
-        return this.numItems;
+    getNumItens(): number {
+        return this.numItens;
     }
 
     getDescricao(): string {
@@ -78,8 +78,8 @@ export class DoacaoItem {
         this.idTipoDoacao = idTipoDoacao;
     }
 
-    setNumItems(numItems: number) {
-        this.numItems = numItems;
+    setNumItens(numItens: number) {
+        this.numItens = numItens;
     }
 
     setDescricao(descricao: string) {

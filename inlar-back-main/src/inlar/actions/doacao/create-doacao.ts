@@ -65,7 +65,7 @@ export class CreateDoacao {
             descricao: item.descricao,
             quantidade: item.quantidade,
             valor: item.valor,
-            numItems: item.numItens,
+            numItens: item.numItens,
             dataCadastro: new Date(),
         }))
     })

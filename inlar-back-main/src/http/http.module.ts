@@ -32,6 +32,14 @@ import { GetDoacaoById } from 'src/inlar/actions/doacao/get-doacao-by-id';
 import { GetDoacaoByIdController } from './controllers/doacao/get-doacao-by-id';
 import { GetDoacoesByPageController } from './controllers/doacao/get-doacoes-by-page';
 import { GetDoacaoByPage } from 'src/inlar/actions/doacao/get-doacoes-by-page';
+import { GetDoacaoItemById } from 'src/inlar/actions/doacao-itens/get-doacao-item-by-id';
+import { GetDoacaoItemByIdController } from './controllers/doacao-itens/get-doacao-item-by id-controller';
+import { GetDoacaoItemByDoacaoIdController } from './controllers/doacao-itens/get-doacoes-itens-by-doacao-id-controller';
+import { GetDoacoesItensByDoacaoId } from 'src/inlar/actions/doacao-itens/get-doacoes-itens-by-doacao-id';
+import { GetDoacoesItensByPageController } from './controllers/doacao-itens/get-doacoes-itens-by-page';
+import { GetDoacoesItensByPage } from 'src/inlar/actions/doacao-itens/get-doacoes-itens-by-page';
+import { UpdateDoacaoItem } from 'src/inlar/actions/doacao-itens/update-doacao-item';
+import { UpdateDoacaoItemController } from './controllers/doacao-itens/update-doacao-item-controller';
 
 @Module({
   imports: [PrismaModule],
@@ -51,7 +59,11 @@ import { GetDoacaoByPage } from 'src/inlar/actions/doacao/get-doacoes-by-page';
     CreateDoacao,
     CreateTipoDoacao,
     GetDoacaoById,
-    GetDoacaoByPage
+    GetDoacaoByPage,
+    GetDoacaoItemById,
+    GetDoacoesItensByDoacaoId,
+    GetDoacoesItensByPage,
+    UpdateDoacaoItem
   ],
   controllers: [
     CreateUsuarioController,
@@ -69,7 +81,11 @@ import { GetDoacaoByPage } from 'src/inlar/actions/doacao/get-doacoes-by-page';
     CreateDoacaoController,
     CreatetipoDoacaoController,
     GetDoacaoByIdController,
-    GetDoacoesByPageController
+    GetDoacoesByPageController,
+    GetDoacaoItemByIdController,
+    GetDoacaoItemByDoacaoIdController,
+    GetDoacoesItensByPageController,
+    UpdateDoacaoItemController
   ],
 })
 export class HttpModule {}

@@ -78,10 +78,13 @@ export class DoacaoItensRepositorio {
     return prismaDoacaoItens.map(DoacaoItensMapper.fromDatabase);
   }
 
-  async findManyByDoacaoId(page: number): Promise<DoacaoItem[]> {
+  async findManyByDoacaoId(idDoacao): Promise<DoacaoItem[]> {
     const prismaDoacaoItens = await this.prisma.doacaoItens.findMany({
-      take: 10,
-      skip: (page - 1) * 10,
+      where: {
+        FK_DOACAOITENS_DOACAO: {
+          IDDOACAO: idDoacao
+        }
+      }
     });
 
     return prismaDoacaoItens.map(DoacaoItensMapper.fromDatabase);
