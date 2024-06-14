@@ -8,7 +8,6 @@ import {
   } from '@nestjs/common';
   import { z } from 'zod';
   import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
-  import { UpdateEmpresa } from 'src/inlar/actions/empresa/update-empresa';
 import { UpdateDoacaoItem } from 'src/inlar/actions/doacao-itens/update-doacao-item';
   
   const squema = z.object({

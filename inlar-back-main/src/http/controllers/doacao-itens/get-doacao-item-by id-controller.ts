@@ -1,7 +1,6 @@
 import {
     Controller,
     HttpCode,
-    BadRequestException,
     Param,
     Get,
     NotFoundException,
