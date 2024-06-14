@@ -4,11 +4,14 @@ import {
     Param,
     Delete,
     NotFoundException,
+    BadRequestException,
   } from '@nestjs/common';
   
   import { z } from 'zod';
   import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
   import { DeleteDoadorById } from 'src/inlar/actions/doador/delete-doador';
+import { NotFoundError } from 'src/inlar/errors/not-found-error';
+import { InternalError } from 'src/inlar/errors/internal-error';
   
   const squema = z.object({
     id_doador: z.coerce.number(),
@@ -27,14 +30,22 @@ import {
       @Param(validationPipe)
       param: Schema,
     ) {
-      const doador = await this.deleteDoadorById.execute({
+      const res = await this.deleteDoadorById.execute({
         idDoador: param.id_doador,
       });
 
-      if (doador) {
-        return doador;
+      if (res instanceof NotFoundError) {
+        throw new NotFoundException(res.message);
       }
   
+      if(res instanceof InternalError) {
+        throw new BadRequestException("Internal Error");
+      }
+
+      if(res) {
+        return res
+      }
+      
       throw new NotFoundException('Doador not found');
     }
   }

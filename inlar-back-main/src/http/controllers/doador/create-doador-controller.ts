@@ -8,6 +8,8 @@ import {
 import { z } from 'zod';
 import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
 import { CreateDoador } from 'src/inlar/actions/doador/create-doador';
+import { Doador } from 'src/inlar/entities/doador';
+import { InternalError } from 'src/inlar/errors/internal-error';
 
 const squema = z.object({
   nome: z.string({
@@ -67,7 +69,7 @@ export class CreateDoadorController {
     @Body(validationPipe)
     body: Schema,
   ) {
-    const doador = await this.createDoador.execute({
+    const res = await this.createDoador.execute({
       nome: body.nome,
       tipoPessoa: body.tipo_pessoa,
       cpf: body.cpf,
@@ -84,8 +86,12 @@ export class CreateDoadorController {
       observacoes: body.observacoes,
     });
 
-    if (doador) {
-      return doador;
+    if (res instanceof Doador) {
+      return res;
+    }
+
+    if(res instanceof InternalError) {
+      throw new BadRequestException("Internal Error");
     }
 
     throw new BadRequestException();

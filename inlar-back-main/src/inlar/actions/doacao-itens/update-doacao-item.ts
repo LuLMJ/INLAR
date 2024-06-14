@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { DoacaoItensRepositorio } from 'src/inlar/database/prisma/repositories/doacao-itens-repositorio';
 import { DoacaoItem } from 'src/inlar/entities/doacao-itens';
+import { InternalError } from 'src/inlar/errors/internal-error';
+import { NotFoundError } from 'src/inlar/errors/not-found-error';
 
 interface Request {
   id: number;
@@ -17,11 +19,11 @@ export class UpdateDoacaoItem {
     private doacaoItensRepositorio: DoacaoItensRepositorio,
 ) {}
 
-  async execute(data: Request): Promise<DoacaoItem | null> {
+  async execute(data: Request): Promise<DoacaoItem | NotFoundError | InternalError> {
     const doacaoItemExists = await this.doacaoItensRepositorio.findById(data.id);
 
     if (!doacaoItemExists) {
-      return null;
+      return new NotFoundError("DoacaoItem not found");
     }
 
     doacaoItemExists.setDescricao(data.descricao)
@@ -34,7 +36,8 @@ export class UpdateDoacaoItem {
 
         return res
     } catch (error) {
-        return null;
+    
+        return new InternalError(error?.message ?? "Internal Error");
     }
   }
 }

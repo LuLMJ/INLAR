@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DoadorRepositorio } from 'src/inlar/database/prisma/repositories/doador-repositorio';
 import { Doador } from 'src/inlar/entities/doador';
+import { InternalError } from 'src/inlar/errors/internal-error';
 
 interface Request {
   nome: string;
@@ -23,7 +24,7 @@ interface Request {
 export class CreateDoador {
   constructor(private doadorRepositorio: DoadorRepositorio) {}
 
-  async execute(data: Request): Promise<Doador | null> {
+  async execute(data: Request): Promise<Doador | InternalError> {
     const doador = new Doador({
       nome: data.nome,
       tipoPessoa: data.tipoPessoa,
@@ -48,8 +49,7 @@ export class CreateDoador {
 
       return res;
     } catch (error) {
-      console.log('error: ', error);
-      return null;
+      return new InternalError(error?.message ?? "Internal Error");
     }
   }
 }

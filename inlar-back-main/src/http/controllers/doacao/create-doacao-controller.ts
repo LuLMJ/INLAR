@@ -4,10 +4,14 @@ import {
     Body,
     HttpCode,
     BadRequestException,
+    NotFoundException,
   } from '@nestjs/common';
   import { z } from 'zod';
   import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
   import { CreateDoacao } from 'src/inlar/actions/doacao/create-doacao';
+import { NotFoundError } from 'src/inlar/errors/not-found-error';
+import { Doacao } from 'src/inlar/entities/doacao';
+import { InternalError } from 'src/inlar/errors/internal-error';
   
   const squema = z.object({
     id_usuario: z.coerce.number(),
@@ -85,7 +89,7 @@ import {
         })
       })
 
-      const doacao = await this.createDoacao.execute({
+      const res = await this.createDoacao.execute({
         id_usuario: body.id_usuario,
         id_doador: body.id_doador,
         descricao: body.descricao,
@@ -100,8 +104,17 @@ import {
         itens: temp,
       });
   
-      if (doacao) {
-        return doacao;
+        
+      if (res instanceof Doacao) {
+        return res;
+      }
+
+      if(res instanceof NotFoundError) {
+        throw new NotFoundException(res.message)
+      }
+
+      if (res instanceof InternalError) {
+        throw new BadRequestException("Internal error");
       }
   
       throw new BadRequestException();
