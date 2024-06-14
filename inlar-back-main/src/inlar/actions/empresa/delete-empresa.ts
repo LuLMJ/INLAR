@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { EmpresaRepositorio } from 'src/inlar/database/prisma/repositories/empresa-repositorio';
-import { Empresa } from 'src/inlar/entities/empresa';
 
 interface Request {
   idEmpresa: number;

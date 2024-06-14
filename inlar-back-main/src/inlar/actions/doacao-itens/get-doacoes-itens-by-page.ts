@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DoacaoItensRepositorio } from 'src/inlar/database/prisma/repositories/doacao-itens-repositorio';
-import { DoadorRepositorio } from 'src/inlar/database/prisma/repositories/doador-repositorio';
 import { DoacaoItem } from 'src/inlar/entities/doacao-itens';
-import { Doador } from 'src/inlar/entities/doador';
 
 interface Request {
   page: number;

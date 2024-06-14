@@ -1,7 +1,6 @@
 import {
   Controller,
   HttpCode,
-  BadRequestException,
   Get,
   Query,
 } from '@nestjs/common';

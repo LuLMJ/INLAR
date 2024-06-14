@@ -1,9 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { Empresa } from '../../../entities/empresa'
-import { EmpresaMapper } from '../mappers/empresa-mapper';
-import { Doacao } from 'src/inlar/entities/doacao';
-import { DoacaoMapper } from '../mappers/doacao-mapper';
 import { DoacaoItem } from 'src/inlar/entities/doacao-itens';
 import { DoacaoItensMapper } from '../mappers/doacao-itens-mapper';
 
