@@ -11,6 +11,7 @@ import {
   
   const squema = z.object({
     id_usuario: z.coerce.number(),
+    id_doador: z.coerce.number().optional(),
     descricao: z.string({
       required_error: 'Field: {nome} is required',
     }),
@@ -86,6 +87,7 @@ import {
 
       const doacao = await this.createDoacao.execute({
         id_usuario: body.id_usuario,
+        id_doador: body.id_doador,
         descricao: body.descricao,
         cep: body.cep,
         logradouro: body.logradouro,
