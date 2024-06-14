@@ -61,6 +61,15 @@ export class DoacaoItensRepositorio {
     return prismaDoacaoItens.map(DoacaoItensMapper.fromDatabase);
   }
 
+  async findManyByDoacaoId(page: number): Promise<DoacaoItem[]> {
+    const prismaDoacaoItens = await this.prisma.doacaoItens.findMany({
+      take: 10,
+      skip: (page - 1) * 10,
+    });
+
+    return prismaDoacaoItens.map(DoacaoItensMapper.fromDatabase);
+  }
+
   async delete(idDoacaoItem: number): Promise<boolean> {
     const res = await this.prisma.doacaoItens.delete({
       where: {
