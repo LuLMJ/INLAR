@@ -46,7 +46,7 @@ import { InternalError } from 'src/inlar/errors/internal-error';
         return res
       }
       
-      throw new NotFoundException('Doador not found');
+      throw new BadRequestException();
     }
   }
   

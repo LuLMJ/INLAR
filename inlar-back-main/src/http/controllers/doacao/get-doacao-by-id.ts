@@ -4,6 +4,7 @@ import {
     Param,
     Get,
     NotFoundException,
+    BadRequestException,
   } from '@nestjs/common';
   
   import { z } from 'zod';
@@ -41,7 +42,7 @@ import { NotFoundError } from 'src/inlar/errors/not-found-error';
         throw new NotFoundError(res.message);
       }
   
-      throw new NotFoundException('Empresa not found');
+      throw new BadRequestException();
     }
   }
   

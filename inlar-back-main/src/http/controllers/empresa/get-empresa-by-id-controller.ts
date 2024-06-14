@@ -4,6 +4,7 @@ import {
     Param,
     Get,
     NotFoundException,
+    BadRequestException,
   } from '@nestjs/common';
   
   import { z } from 'zod';
@@ -40,7 +41,7 @@ import { Empresa } from 'src/inlar/entities/empresa';
         throw new NotFoundException(res.message)
       }
   
-      throw new NotFoundException('Empresa not found');
+      throw new BadRequestException();
     }
   }
   
