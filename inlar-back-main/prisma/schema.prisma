@@ -89,8 +89,8 @@ model usuario {
 
 model doacao {
   IDDOACAO       Int      @id @default(autoincrement())
-  IDDOADOR       Int
-  IDBENEFICIARIO Int
+  IDDOADOR       Int?
+  IDBENEFICIARIO Int?
   IDUSUARIO      Int
   DESCRICAO      String   @db.VarChar(100)
   DATACAD        DateTime @default(now())
@@ -103,8 +103,8 @@ model doacao {
   SIGLAESTADO    String?  @db.VarChar(2)
   SITUACAO       String   @default("S")
 
-  FK_DOACAO_DOADOR       doador        @relation(fields: [IDDOADOR], references: [IDDOADOR])
-  FK_DOACAO_BENEFICIARIO beneficiario  @relation(fields: [IDBENEFICIARIO], references: [IDBENEFICIARIO])
+  FK_DOACAO_DOADOR       doador?        @relation(fields: [IDDOADOR], references: [IDDOADOR])
+  FK_DOACAO_BENEFICIARIO beneficiario?  @relation(fields: [IDBENEFICIARIO], references: [IDBENEFICIARIO])
   FK_DOACAO_USUARIO      usuario       @relation(fields: [IDUSUARIO], references: [IDUSUARIO])
   doacaoItens            doacaoItens[]
 }
@@ -113,10 +113,10 @@ model doacaoItens {
   IDITEMDOACAO   Int      @id @default(autoincrement())
   IDDOACAO       Int
   IDTIPODOACAO   Int
-  NUMITEM        Int
+  NUMITEM        Int?
   DESCRICAO      String?  @db.VarChar(255)
   QTDE           Int?
-  VALORMONETARIO Decimal  @db.Decimal(10, 2)
+  VALORMONETARIO Decimal?  @db.Decimal(10, 2)
   DATACAD        DateTime @default(now())
 
   FK_DOACAOITENS_DOACAO     doacao     @relation(fields: [IDDOACAO], references: [IDDOACAO])

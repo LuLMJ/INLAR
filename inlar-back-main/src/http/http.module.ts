@@ -24,6 +24,9 @@ import { DeleteEmmpresaController } from './controllers/empresa/delete-empresa-c
 import { DeleteEmpresa } from 'src/inlar/actions/empresa/delete-empresa';
 import { AuthenticateUser } from 'src/inlar/actions/usuarios/authenticate-user';
 import { AuthenticateUserController } from './controllers/usuarios/authenticate-user-controller';
+import { CreateDoacaoController } from './controllers/doacao/create-doacao-controller';
+import { CreateDoacao } from 'src/inlar/actions/doacao/create-doacao';
+import { CreateTipoDoacao } from 'src/inlar/actions/tipo-doacao/create-tipo-doacao';
 
 @Module({
   imports: [PrismaModule],
@@ -39,7 +42,9 @@ import { AuthenticateUserController } from './controllers/usuarios/authenticate-
     GetEmpresaByPage,
     UpdateEmpresa,
     DeleteEmpresa,
-    AuthenticateUser
+    AuthenticateUser,
+    CreateDoacao,
+    CreateTipoDoacao
   ],
   controllers: [
     CreateUsuarioController,
@@ -53,7 +58,8 @@ import { AuthenticateUserController } from './controllers/usuarios/authenticate-
     GetEmpresaByPageController,
     UpdateEmpresaController,
     DeleteEmmpresaController,
-    AuthenticateUserController
+    AuthenticateUserController,
+    CreateDoacaoController
   ],
 })
 export class HttpModule {}

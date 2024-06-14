@@ -7,6 +7,7 @@ import { DoacaoItem } from 'src/inlar/entities/doacao-itens';
 import { Doador } from 'src/inlar/entities/doador';
 
 interface Request {
+  id_usuario: number;
   descricao: string;
   cep?: string | null;
   logradouro?: string | null;
@@ -17,7 +18,7 @@ interface Request {
   uf?: string | null;
   observacoes?: string | null;
   itens: {
-    tipo: string
+    tipo: number
     numItens?: number
     quantidade?: number
     valor?: number
@@ -34,6 +35,7 @@ export class CreateDoacao {
 
   async execute(data: Request): Promise<Doacao | null> {
     const doacao = new Doacao({
+      idUsuario: data.id_usuario,
       descricao: data.descricao,
       cep: data.cep,
       logradouro: data.logradouro,
@@ -52,23 +54,25 @@ export class CreateDoacao {
     try {
         createdDoacao = await this.doacaoRepositorio.create(doacao);
     } catch (error) {
+        console.log('error: ', error);
         return null
     }
 
     data.itens.map((item) => {
         doacaoItens.push(new DoacaoItem({
             idDoacao: createdDoacao.getIdDoacao(),
+            idTipoDoacao: item.tipo,
             descricao: item.descricao,
             quantidade: item.quantidade,
             valor: item.valor,
             numItems: item.numItens,
-            dataCadastro: new Date()
+            dataCadastro: new Date(),
         }))
     })
 
     try {
         await this.doacaoItemRepositorio.createMany(doacaoItens);
-    } catch (error) {
+    } catch (error) { 
         return null
     }
 
