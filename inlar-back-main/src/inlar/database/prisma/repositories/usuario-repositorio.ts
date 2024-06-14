@@ -17,16 +17,15 @@ export class UsuarioRepositorio {
     return UsuarioMapper.fromDatabase(prismaUsuario);
   }
 
-  async findByEmail(idUsuario: number, email: string): Promise<Usuario | null> {
-    const prismaUsuario = await this.prisma.usuario.findUnique({
+  async findByEmail(email: string): Promise<Usuario | null> {
+    const prismaUsuario = await this.prisma.usuario.findMany({
       where: {
-        IDUSUARIO: idUsuario,
         EMAIL: email,
       },
     });
 
-    if (prismaUsuario) {
-      return UsuarioMapper.fromDatabase(prismaUsuario);
+    if (prismaUsuario && prismaUsuario[0]) {
+      return UsuarioMapper.fromDatabase(prismaUsuario[0]);
     }
 
     return null;
