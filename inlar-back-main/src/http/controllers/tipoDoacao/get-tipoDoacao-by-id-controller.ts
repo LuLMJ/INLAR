@@ -4,10 +4,13 @@
      Param,
      Get,
      NotFoundException,
+     BadRequestException,
    } from '@nestjs/common';
    import { z } from 'zod';
    import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
    import { GetTipoDoacaoById } from 'src/inlar/actions/tipo-doacao/get-tipo-doacao-by-id';
+import { TipoDoacao } from 'src/inlar/entities/tipoDoacao';
+import { NotFoundError } from 'src/inlar/errors/not-found-error';
    const squema = z.object({
      id_tipoDoacao: z.coerce.number(),
    });
@@ -22,12 +25,19 @@
        @Param(validationPipe)
        param: Schema,
      ) {
-       const tipoDoacao = await this.getTipoDoacaoById.execute({
+
+       const res = await this.getTipoDoacaoById.execute({
          id: param.id_tipoDoacao,
        });
-       if (tipoDoacao) {
-         return tipoDoacao;
+
+       if (res instanceof TipoDoacao) {
+         return res;
        }
-       throw new NotFoundException('tipoDoacao not found');
+
+       if(res instanceof NotFoundError) {
+         throw new NotFoundException(res.message)
+       }
+
+       throw new BadRequestException();
      }
    }

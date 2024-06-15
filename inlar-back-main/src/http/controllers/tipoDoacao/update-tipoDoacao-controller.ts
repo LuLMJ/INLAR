@@ -5,10 +5,14 @@
      BadRequestException,
      Put,
      Param,
+     NotFoundException,
    } from '@nestjs/common';
    import { z } from 'zod';
    import { ZodValidationPipe } from '../../pipes/zod-validation.pipe';
    import { UpdatetipoDoacao } from 'src/inlar/actions/tipo-doacao/update-tipo-doacao';
+import { NotFoundError } from 'rxjs';
+import { InternalError } from 'src/inlar/errors/internal-error';
+import { TipoDoacao } from 'src/inlar/entities/tipoDoacao';
    
    const squema = z.object({
      descricao: z.string().optional(),
@@ -36,15 +40,24 @@
        @Body(validationPipe)
        body: Schema,
      ) {
-       const tipoDoacao = await this.updatetipoDoacao.execute({
+       const res = await this.updatetipoDoacao.execute({
          id: param.id_tipoDoacao,
          descricao: body.descricao,
          ativo: body.ativo,
        });
 
-       if (tipoDoacao) {
-         return tipoDoacao;
+       if (res instanceof TipoDoacao) {
+         return res;
        }
+
+       if(res instanceof NotFoundError) {
+        throw new NotFoundException(res.message);
+      }
+  
+      if(res instanceof InternalError) {
+        throw new BadRequestException("Internal Error");
+      }
+      
        throw new BadRequestException;
      }
    }
