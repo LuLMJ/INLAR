@@ -40,6 +40,12 @@ import { GetDoacoesItensByPageController } from './controllers/doacao-itens/get-
 import { GetDoacoesItensByPage } from 'src/inlar/actions/doacao-itens/get-doacoes-itens-by-page';
 import { UpdateDoacaoItem } from 'src/inlar/actions/doacao-itens/update-doacao-item';
 import { UpdateDoacaoItemController } from './controllers/doacao-itens/update-doacao-item-controller';
+import { GetAllTipoDoacao } from 'src/inlar/actions/tipo-doacao/get-all-tipo-doacao';
+import { GetAllTipoDoacoesController } from './controllers/tipoDoacao/get-all-tipoDoacoes-controllers';
+import { GetTipoDoacaoById } from 'src/inlar/actions/tipo-doacao/get-tipo-doacao-by-id';
+import { UpdatetipoDoacao } from 'src/inlar/actions/tipo-doacao/update-tipo-doacao';
+import { GetTipoDoacaooByIdController } from './controllers/tipoDoacao/get-tipoDoacao-by-id-controller';
+import { UpdatetipoDoacaoController } from './controllers/tipoDoacao/update-tipoDoacao-controller';
 
 @Module({
   imports: [PrismaModule],
@@ -63,7 +69,10 @@ import { UpdateDoacaoItemController } from './controllers/doacao-itens/update-do
     GetDoacaoItemById,
     GetDoacoesItensByDoacaoId,
     GetDoacoesItensByPage,
-    UpdateDoacaoItem
+    UpdateDoacaoItem,
+    GetAllTipoDoacao,
+    GetTipoDoacaoById,
+    UpdatetipoDoacao
   ],
   controllers: [
     CreateUsuarioController,
@@ -85,7 +94,10 @@ import { UpdateDoacaoItemController } from './controllers/doacao-itens/update-do
     GetDoacaoItemByIdController,
     GetDoacaoItemByDoacaoIdController,
     GetDoacoesItensByPageController,
-    UpdateDoacaoItemController
+    UpdateDoacaoItemController,
+    GetAllTipoDoacoesController,
+    GetTipoDoacaooByIdController,
+    UpdatetipoDoacaoController
   ],
 })
 export class HttpModule {}
