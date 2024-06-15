@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { TipoDoacao } from 'src/inlar/entities/tipoDoacao';
 import { TipoDoacaoMapper } from '../mappers/tipoDoacao-mapper';
+import { async } from 'rxjs';
+import { number, boolean } from 'zod';
 
 @Injectable()
 export class TipoDoacaoRepositorio {
@@ -47,6 +49,13 @@ export class TipoDoacaoRepositorio {
 
     return null;
   }
+
+  async findAll(): Promise<TipoDoacao[]> {
+    const prismaTipoDoacao = await this.prisma.tipodoacao.findMany();
+
+    return prismaTipoDoacao.map(TipoDoacaoMapper.fromDatabase);
+  }
+
 
   async findMany(page: number): Promise<TipoDoacao[]> {
     const prismaTipoDoacao = await this.prisma.tipodoacao.findMany({
