@@ -46,6 +46,14 @@ import { GetTipoDoacaoById } from 'src/inlar/actions/tipo-doacao/get-tipo-doacao
 import { UpdatetipoDoacao } from 'src/inlar/actions/tipo-doacao/update-tipo-doacao';
 import { GetTipoDoacaooByIdController } from './controllers/tipoDoacao/get-tipoDoacao-by-id-controller';
 import { UpdatetipoDoacaoController } from './controllers/tipoDoacao/update-tipoDoacao-controller';
+import { CreateBeneficiario } from 'src/inlar/actions/beneficiario/create-beneficiario';
+import { GetBeneficiariosByPage } from 'src/inlar/actions/beneficiario/get-beneficiario-by-page';
+import { GetBeneficiarioById } from 'src/inlar/actions/beneficiario/get-beneficiario-by-id';
+import { UpdateBeneficiario } from 'src/inlar/actions/beneficiario/update-beneficiario';
+import { CreateBeneficiarioController } from './controllers/beneficiarios/create-beneficiario-controller';
+import { GetBeneficiarioByIdController } from './controllers/beneficiarios/get-beneficiario-by-id-controller';
+import { GetBeneficiarioByPageController } from './controllers/beneficiarios/get-beneficiario-by-page-controller';
+import { UpdateBeneficiarioController } from './controllers/beneficiarios/update-beneficiario-controller';
 
 @Module({
   imports: [PrismaModule],
@@ -72,7 +80,11 @@ import { UpdatetipoDoacaoController } from './controllers/tipoDoacao/update-tipo
     UpdateDoacaoItem,
     GetAllTipoDoacao,
     GetTipoDoacaoById,
-    UpdatetipoDoacao
+    UpdatetipoDoacao,
+    CreateBeneficiario,
+    GetBeneficiariosByPage,
+    GetBeneficiarioById,
+    UpdateBeneficiario
   ],
   controllers: [
     CreateUsuarioController,
@@ -97,7 +109,11 @@ import { UpdatetipoDoacaoController } from './controllers/tipoDoacao/update-tipo
     UpdateDoacaoItemController,
     GetAllTipoDoacoesController,
     GetTipoDoacaooByIdController,
-    UpdatetipoDoacaoController
+    UpdatetipoDoacaoController,
+    CreateBeneficiarioController,
+    GetBeneficiarioByIdController,
+    GetBeneficiarioByPageController,
+    UpdateBeneficiarioController
   ],
 })
 export class HttpModule {}
