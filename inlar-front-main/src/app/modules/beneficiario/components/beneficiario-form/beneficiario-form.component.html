@@ -1,0 +1,38 @@
+<div>
+  <form [formGroup]="beneficiarioForm" (ngSubmit)="handleSubmit()">
+    <div class="card flex flex-column md:flex-column gap-3">
+      <input pInputText placeholder="Nome" formControlName="nome" />
+      
+      <select formControlName="tipoPessoa">
+        <option value="F">Pessoa Física</option>
+        <option value="J">Pessoa Jurídica</option>
+      </select>
+
+      <div *ngIf="beneficiarioForm.get('tipoPessoa')?.value === 'F'">
+        <input pInputText placeholder="CPF" formControlName="cpf" />
+        <input pInputText placeholder="RG" formControlName="rg" />
+        <input pInputText placeholder="Gênero" formControlName="genero" />
+        <input type="date" pInputText placeholder="Data de Nascimento" formControlName="dataNascimento" />
+      </div>
+
+      <div *ngIf="beneficiarioForm.get('tipoPessoa')?.value === 'J'">
+        <input pInputText placeholder="CNPJ" formControlName="cnpj" />
+      </div>
+
+      <input pInputText placeholder="Contato 1" formControlName="contato1" />
+      <input pInputText placeholder="Contato 2" formControlName="contato2" />
+      <input pInputText placeholder="CEP" formControlName="cep" />
+      <input pInputText placeholder="Logradouro" formControlName="logradouro" />
+      <input pInputText placeholder="Número" formControlName="numero" />
+      <input pInputText placeholder="Complemento" formControlName="complemento" />
+      <input pInputText placeholder="Bairro" formControlName="bairro" />
+      <input pInputText placeholder="Cidade" formControlName="cidade" />
+      <input pInputText placeholder="Sigla Estado" formControlName="siglaEstado" />
+      <textarea pInputTextarea placeholder="Observações" formControlName="observacoes"></textarea>
+
+      <div class="flex flex-row justify-content-center align-content-center align-items-center">
+        <p-button [disabled]="!beneficiarioForm.valid" type="submit" label="Concluir"></p-button>
+      </div>
+    </div>
+  </form>
+</div>
