@@ -1,4 +1,0 @@
-export enum BeneficiarioEvent {
-  ADD_BENEFICIARIO_ACTION = 'Adicionar BENFICIARIO',
-  EDIT_BENEFICIARIO_ACTION = 'Editar BENEFICIARIO',
-}
