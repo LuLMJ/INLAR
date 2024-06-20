@@ -8,4 +8,8 @@ export interface GetAllProductsResponse {
     id: string;
     name: string;
   };
+  doador_id: {
+    id: string;
+    name: string;
+  };
 }

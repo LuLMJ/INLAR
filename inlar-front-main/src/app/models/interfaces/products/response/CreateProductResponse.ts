@@ -5,4 +5,5 @@ export interface CreateProductResponse {
   description: string;
   amount: number;
   category_id: string;
+  doador_id_id: string;
 }

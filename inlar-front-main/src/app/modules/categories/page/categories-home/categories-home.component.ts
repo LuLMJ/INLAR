@@ -41,6 +41,7 @@ export class CategoriesHomeComponent implements OnInit, OnDestroy {
             this.categoriesDatas = response;
           }
         },
+                //Rota para quando dar algum erro na busca das informações
         error: (err) => {
           console.log(err);
           this.messageService.add({

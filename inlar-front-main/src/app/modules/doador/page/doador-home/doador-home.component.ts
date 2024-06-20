@@ -43,6 +43,7 @@ export class DoadorHomeComponent implements OnInit, OnDestroy {
             this.doadorDatas = response;
           }
         },
+                //Rota para quando dar algum erro na busca das informações
         error: (err: any) => {
           console.log(err);
           this.messageService.add({

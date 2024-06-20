@@ -1,11 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { DoadorService } from 'src/app/services/doador/doador.service';
 import { GetDoadorResponse } from 'src/app/models/interfaces/doador/responses/GetDoadorResponse';
 import { EditDoadorAction } from 'src/app/models/interfaces/doador/event/EditDoadorAction';
+import { isValid as isValidCNPJ } from '@fnando/cnpj';
+import { isValid as isValidCPF } from '@fnando/cpf';
 
 @Component({
   selector: 'app-doador-form',
@@ -16,7 +19,10 @@ export class DoadorFormComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
 
   public doadorForm: FormGroup;
-  public isEditing = false; // Flag para verificar se está editando um doador existente
+  public isEditing = false; 
+  public estados: any[]; 
+  public tiposPessoa: any[]; 
+  public generos: any[]; 
 
   constructor(
     public ref: DynamicDialogConfig,
@@ -26,28 +32,72 @@ export class DoadorFormComponent implements OnInit, OnDestroy {
   ) {
     this.doadorForm = this.formBuilder.group({
       nome: ['', Validators.required],
-      tipoPessoa: ['F', Validators.required], // Valor padrão 'F' para pessoa física
-      cpf: [''],
-      cnpj: [''],
-      contato1: [''],
+      tipoPessoa: ['F', Validators.required], 
+      cpf: ['', [Validators.required, this.cpfValidator]],
+      rg: [''],
+      genero: ['', Validators.required],
+      dataNascimento: [''],
+      cnpj: ['', [Validators.required, this.cnpjValidator]],
+      razaoSocial: [''], 
+      contato1: ['', Validators.required],
       contato2: [''],
-      cep: [''],
-      logradouro: [''],
-      numero: [''],
-      complemento: [''],
-      bairro: [''],
-      cidade: [''],
-      siglaEstado: [''],
+      cep: ['', Validators.required],
+      logradouro: ['', Validators.required],
+      numero: ['', Validators.required],
+      complemento: ['', Validators.required],
+      bairro: ['', Validators.required],
+      cidade: ['', Validators.required],
+      siglaEstado: ['', Validators.required],
       observacoes: [''],
-      ativo: [true] // Valor padrão 'true' para ativo
+      ativo: [true] 
     });
+
+    this.estados = [
+      { label: 'Acre', value: 'AC' },
+      { label: 'Alagoas', value: 'AL' },
+      { label: 'Amapá', value: 'AP' },
+      { label: 'Amazonas', value: 'AM' },
+      { label: 'Bahia', value: 'BA' },
+      { label: 'Ceará', value: 'CE' },
+      { label: 'Distrito Federal', value: 'DF' },
+      { label: 'Espírito Santo', value: 'ES' },
+      { label: 'Goiás', value: 'GO' },
+      { label: 'Maranhão', value: 'MA' },
+      { label: 'Mato Grosso', value: 'MT' },
+      { label: 'Mato Grosso do Sul', value: 'MS' },
+      { label: 'Minas Gerais', value: 'MG' },
+      { label: 'Pará', value: 'PA' },
+      { label: 'Paraíba', value: 'PB' },
+      { label: 'Paraná', value: 'PR' },
+      { label: 'Pernambuco', value: 'PE' },
+      { label: 'Piauí', value: 'PI' },
+      { label: 'Rio de Janeiro', value: 'RJ' },
+      { label: 'Rio Grande do Norte', value: 'RN' },
+      { label: 'Rio Grande do Sul', value: 'RS' },
+      { label: 'Rondônia', value: 'RO' },
+      { label: 'Roraima', value: 'RR' },
+      { label: 'Santa Catarina', value: 'SC' },
+      { label: 'São Paulo', value: 'SP' },
+      { label: 'Sergipe', value: 'SE' },
+      { label: 'Tocantins', value: 'TO' }
+    ];
+
+    this.tiposPessoa = [
+      { label: 'Pessoa Física', value: 'F' },
+      { label: 'Pessoa Jurídica', value: 'J' }
+    ];
+
+    this.generos = [
+      { label: 'Masculino', value: 'M' },
+      { label: 'Feminino', value: 'F' }
+    ];
   }
 
   ngOnInit(): void {
     const doadorData = this.ref.data;
 
     if (doadorData) {
-      this.isEditing = !!doadorData.id; // Verifica se há um ID para determinar se é edição
+      this.isEditing = !!doadorData.id; 
       this.populateForm(doadorData);
     }
   }
@@ -97,18 +147,22 @@ export class DoadorFormComponent implements OnInit, OnDestroy {
   private populateForm(doadorData: GetDoadorResponse): void {
     this.doadorForm.patchValue({
       nome: doadorData.nome,
-      cpf: doadorData.cpf,
-      cnpj: doadorData.cnpj,
-      contato1: doadorData.contato1,
-      contato2: doadorData.contato2,
-      cep: doadorData.cep,
-      logradouro: doadorData.logradouro,
-      numero: doadorData.numero,
-      complemento: doadorData.complemento,
-      bairro: doadorData.bairro,
-      cidade: doadorData.cidade,
-      siglaEstado: doadorData.siglaEstado,
-      observacoes: doadorData.observacoes,
+      cpf: doadorData.cpf || '',
+      rg: doadorData.rg || '',
+      genero: doadorData.genero || '',
+      dataNascimento: doadorData.dataNascimento || '',
+      cnpj: doadorData.cnpj || '',
+      razaoSocial: doadorData.razaoSocial || '',
+      contato1: doadorData.contato1 || '',
+      contato2: doadorData.contato2 || '',
+      cep: doadorData.cep || '',
+      logradouro: doadorData.logradouro || '',
+      numero: doadorData.numero || '',
+      complemento: doadorData.complemento || '',
+      bairro: doadorData.bairro || '',
+      cidade: doadorData.cidade || '',
+      siglaEstado: doadorData.siglaEstado || '',
+      observacoes: doadorData.observacoes || '',
       ativo: doadorData.ativo
     });
   }
@@ -135,5 +189,21 @@ export class DoadorFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private cnpjValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (value && !isValidCNPJ(value.replace(/\D/g, ''))) {
+      return { 'invalidCnpj': true };
+    }
+    return null;
+  }
+
+  private cpfValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (value && !isValidCPF(value.replace(/\D/g, ''))) {
+      return { 'invalidCpf': true };
+    }
+    return null;
   }
 }

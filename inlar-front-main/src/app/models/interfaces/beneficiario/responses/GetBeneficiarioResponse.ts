@@ -1,10 +1,13 @@
 export interface GetBeneficiarioResponse {
-  rg: any;
-  id: string;
+  idbeneficiario: number;
   nome: string;
   tipoPessoa: string;
   cpf?: string;
+  rg?: string;
+  genero?: string;
+  dataNascimento?: string;
   cnpj?: string;
+  razaoSocial?: string;
   contato1?: string;
   contato2?: string;
   cep?: string;

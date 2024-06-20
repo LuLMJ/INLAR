@@ -45,6 +45,7 @@ export class BeneficiarioHomeComponent implements OnInit, OnDestroy {
             this.beneficiarioDatas = response;
           }
         },
+        //Rota para quando dar algum erro na busca das informações
         error: (err: any) => {
           console.log(err);
           this.messageService.add({

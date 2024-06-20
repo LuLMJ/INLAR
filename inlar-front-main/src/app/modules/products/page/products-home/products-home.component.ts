@@ -50,6 +50,7 @@ export class ProductsHomeComponent implements OnInit, OnDestroy {
             this.productsDatas = response;
           }
         },
+                //Rota para quando dar algum erro na busca das informações
         error: (err) => {
           console.log(err);
           this.messageService.add({

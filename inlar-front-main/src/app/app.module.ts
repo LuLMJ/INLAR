@@ -4,6 +4,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { CnpjMaskDirective } from './directive/CNPJ/cnpj-mask.directive';
+import { CpfMaskDirective } from './directive/CPF/cpf-mask.directive';
+import { CnpjValidatorDirective } from './directive/validator/cnpj/cnpj-validator.directive';
+import { CpfValidatorDirective } from './directive/validator/cpf/cpf-validator.directive';
+
 
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,7 +22,12 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './modules/home/home.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [AppComponent, 
+    HomeComponent,  
+    CnpjMaskDirective,
+    CpfMaskDirective,
+    CnpjValidatorDirective,
+    CpfValidatorDirective],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,6 +39,7 @@ import { HomeComponent } from './modules/home/home.component';
     InputTextModule,
     ButtonModule,
     ToastModule,
+    SelectButtonModule
   ],
   providers: [CookieService, MessageService],
   bootstrap: [AppComponent],

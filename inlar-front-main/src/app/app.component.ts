@@ -7,7 +7,7 @@ import { PrimeNGConfig } from 'primeng/api';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'stock-control';
+  title = 'Inlar-Control';
 
   constructor(private primeNgConfig: PrimeNGConfig) {}
 

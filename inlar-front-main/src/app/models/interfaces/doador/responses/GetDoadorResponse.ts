@@ -1,7 +1,7 @@
+
 export interface GetDoadorResponse {
-  id: string;
+  id: number;
   nome: string;
-  tipoPessoa: string;
   cpf?: string;
   cnpj?: string;
   contato1?: string;
@@ -15,4 +15,8 @@ export interface GetDoadorResponse {
   siglaEstado?: string;
   observacoes?: string;
   ativo: boolean;
+  rg?: string; 
+  genero?: string; 
+  dataNascimento?: string; 
+  razaoSocial?: string; 
 }

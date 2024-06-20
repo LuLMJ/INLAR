@@ -1,10 +1,10 @@
-<!-- FORMULÁRIO DE NOVO PRODUTO -->
+
 <div *ngIf="productAction?.event?.action === addProductAction">
   <form [formGroup]="addProductForm" (ngSubmit)="handleSubmitAddProduct()">
     <div class="card flex flex-column md:flex-column gap-3">
-      <!-- Nome do produto -->
+
       <input pInputText placeholder="Nome" formControlName="name" />
-      <!-- Categoria do produto -->
+
       <p-dropdown
         styleClass="w-full"
         [options]="categoriesDatas"
@@ -14,7 +14,7 @@
         placeholder="Selecione uma categoria"
         formControlName="category_id"
       ></p-dropdown>
-        <!-- Preço do Doador -->
+
         <p-dropdown
         styleClass="w-full"
         [options]="doadorDatas"
@@ -24,11 +24,11 @@
         placeholder="Selecione um(a) Doador"
         formControlName="doador_id"
       ></p-dropdown>
-      <!-- Preço do produto -->
+
       <input pInputText placeholder="Preço" formControlName="price" />
-      <!-- Descrição do produto -->
+
       <input pInputText placeholder="Descrição" formControlName="description" />
-      <!-- Quantidade do produto -->
+
       <input pInputText placeholder="Quantidade" formControlName="amount" />
 
       <div
